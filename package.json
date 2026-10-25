@@ -8,9 +8,8 @@
   },
   "scripts": {
     "dev": "vite",
-    "start": "vite --host 0.0.0.0",
-    "dev:backend": "cd backend && npm run dev",
     "build": "vite build",
+    "start": "node server.js",
     "build:backend": "cd backend && npm run build",
     "lint": "oxlint",
     "preview": "vite preview"

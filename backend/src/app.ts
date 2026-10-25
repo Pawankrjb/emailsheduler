@@ -3,7 +3,6 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import path from 'path';
 import fs from 'fs';
-import { fileURLToPath } from 'url';
 import { createBullBoard } from '@bull-board/api';
 import { BullMQAdapter } from '@bull-board/api/bullMQAdapter';
 import { ExpressAdapter } from '@bull-board/express';
@@ -16,8 +15,6 @@ import authRoutes from './routes/authRoutes.js';
 
 export function createApp() {
   const app = express();
-
-  const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
   // Middleware
   app.use(express.json());

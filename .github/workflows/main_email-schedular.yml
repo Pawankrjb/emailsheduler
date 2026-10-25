@@ -61,6 +61,8 @@ jobs:
           RG=$(az webapp list --query "[?name=='email-schedular'].resourceGroup" -o tsv | head -n 1)
           echo "Found Resource Group: $RG"
           if [ -n "$RG" ]; then
+            echo "Ensuring Web App is enabled..."
+            az webapp update --name email-schedular --resource-group "$RG" --set enabled=true || true
             echo "Setting startup command to 'node server.js'..."
             az webapp config set --name email-schedular --resource-group "$RG" --startup-file "node server.js" || true
             echo "Starting Web App if stopped..."

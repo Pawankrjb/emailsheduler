@@ -13,7 +13,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: read #This is required for actions/checkout
+      contents: read
 
     steps:
       - uses: actions/checkout@v4
@@ -39,8 +39,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     permissions:
-      id-token: write #This is required for requesting the JWT
-      contents: read #This is required for actions/checkout
+      id-token: write
+      contents: read
 
     steps:
       - name: Download artifact from build job
@@ -55,6 +55,21 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_36981CD316CE4505B72C5DC0B59999A7 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_C412C2F95549459C831519130D4DB733 }}
 
+      - name: Auto-configure and start Azure Web App
+        run: |
+          echo "Finding Resource Group for email-schedular..."
+          RG=$(az webapp list --query "[?name=='email-schedular'].resourceGroup" -o tsv | head -n 1)
+          echo "Found Resource Group: $RG"
+          if [ -n "$RG" ]; then
+            echo "Setting startup command to 'node server.js'..."
+            az webapp config set --name email-schedular --resource-group "$RG" --startup-file "node server.js" || true
+            echo "Starting Web App if stopped..."
+            az webapp start --name email-schedular --resource-group "$RG" || true
+          else
+            az webapp config set --name email-schedular --startup-file "node server.js" || true
+            az webapp start --name email-schedular || true
+          fi
+
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
@@ -62,4 +77,3 @@ jobs:
           app-name: 'email-schedular'
           slot-name: 'Production'
           package: .
-          

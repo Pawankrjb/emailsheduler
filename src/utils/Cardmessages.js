@@ -29,7 +29,7 @@ const messages = [
   },
   {
     id: 5,
-    title: "Study Planner",
+    title: "Email Scheduler",
     description:
       "Builds a personalized roadmap for your chosen career path.",
     buttonText: "Build Plan",

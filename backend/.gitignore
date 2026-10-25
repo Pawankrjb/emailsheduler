@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# TypeScript build output
+dist/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Local SQLite / Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# OS & Editor files
+.DS_Store
+.idea/
+.vscode/

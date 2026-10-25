@@ -28,7 +28,7 @@ function Signup() {
 
     try {
       // formData has already been validated and transformed by Zod.
-      await api.post('/user/signup', formData);
+      await api.post('/signup', formData);
       navigate('/', { replace: true });
     } catch (error) {
       setServerError(getErrorMessage(error));
@@ -61,7 +61,7 @@ function Signup() {
         </h1>
 
         <p className="mt-2 text-sm text-gray-600">
-          Join Study Planner and start organizing your learning.
+          Join Email Scheduler and start organizing your emails.
         </p>
 
         <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-5">

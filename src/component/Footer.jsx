@@ -18,13 +18,13 @@ function Footer() {
          
           
           <p className="mt-2 text-sm text-gray-400">
-            Plan your studies, achieve your goals.
+            Schedule your emails, achieve your goals.
           
           </p>
 
           <div className="mt-8 border-t border-gray-700 pt-5 text-center text-sm text-gray-400">
-        © {new Date().getFullYear()} StudyPlanner. All rights reserved.
-      </div>
+            © 2026 ReachInbox Scheduler • Email Scheduler. All rights reserved.
+          </div>
       </div>
 
       

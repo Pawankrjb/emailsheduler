@@ -1,0 +1,373 @@
+/* =============================================
+   Email Scheduler — Bull Board Theme
+   Colors taken directly from Login page
+   Outer bg: #1e1c1c  |  Card: white
+   Text: black / gray-600  |  Accent: black
+   ============================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --bb-bg:           #1e1c1c;
+  --bb-sidebar-bg:   #171515;
+  --bb-card-bg:      #ffffff;
+  --bb-border:       #e5e7eb;   /* gray-200 */
+  --bb-border-dark:  #374151;   /* gray-700 / used on dark areas */
+  --bb-accent:       #000000;   /* black — login submit btn */
+  --bb-accent-hover: #1f2937;   /* gray-800 */
+  --bb-text:         #111827;   /* text-black */
+  --bb-text-muted:   #6b7280;   /* text-gray-600 */
+  --bb-text-placeholder: #9ca3af; /* text-gray-400 */
+  --bb-success:      #16a34a;
+  --bb-error:        #ef4444;
+  --bb-error-bg:     #fef2f2;
+  --bb-error-border: #fecaca;
+  --bb-focus-ring:   #e5e7eb;   /* ring-gray-200 */
+}
+
+/* ---- Base ---- */
+*, *::before, *::after { box-sizing: border-box; }
+
+body, html, #root {
+  background: var(--bb-bg) !important;
+  color: var(--bb-text) !important;
+  font-family: 'Inter', 'Segoe UI', sans-serif !important;
+  -webkit-font-smoothing: antialiased !important;
+}
+
+/* ---- Sidebar (dark like the login outer bg) ---- */
+.sidebar,
+[class*="Sidebar"],
+[class*="sidebar"],
+aside,
+nav[class*="sidebar"] {
+  background: var(--bb-sidebar-bg) !important;
+  border-right: 1px solid var(--bb-border-dark) !important;
+  color: #d1d5db !important;
+}
+
+[class*="AppTitle"],
+[class*="boardTitle"],
+[class*="title"] h1,
+h1[class*="title"] {
+  color: #f9fafb !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.015em !important;
+}
+
+/* Queue nav items */
+[class*="QueueItem"],
+[class*="queueItem"],
+a[class*="menu"],
+[class*="menuItem"] {
+  color: #9ca3af !important;
+  border-radius: 8px !important;
+  padding: 8px 12px !important;
+  margin: 2px 8px !important;
+  transition: all 0.15s ease !important;
+  text-decoration: none !important;
+}
+
+[class*="QueueItem"]:hover,
+[class*="queueItem"]:hover,
+a[class*="menu"]:hover,
+[class*="active"] {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+}
+
+/* ---- Top header bar ---- */
+header,
+[class*="Header"],
+[class*="header"] {
+  background: #ffffff !important;
+  border-bottom: 1px solid var(--bb-border) !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06) !important;
+  color: var(--bb-text) !important;
+}
+
+/* ---- Main content area ---- */
+main,
+[class*="content"],
+[class*="Content"],
+[class*="main"],
+[class*="Main"] {
+  background: #f9fafb !important;
+  color: var(--bb-text) !important;
+}
+
+/* ---- White cards — same as login card ---- */
+[class*="Card"],
+[class*="card"],
+[class*="Panel"],
+[class*="panel"],
+[class*="Box"],
+[class*="box"],
+[class*="Widget"],
+[class*="widget"] {
+  background: #ffffff !important;
+  border: 1px solid var(--bb-border) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06) !important;
+  color: var(--bb-text) !important;
+}
+
+/* ---- Table — white bg like the login card ---- */
+table {
+  background: #ffffff !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  border-radius: 12px !important;
+  border: 1px solid var(--bb-border) !important;
+  overflow: hidden !important;
+  width: 100% !important;
+}
+
+thead tr {
+  background: #f9fafb !important;
+  border-bottom: 1px solid var(--bb-border) !important;
+}
+
+thead th {
+  color: var(--bb-text-muted) !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  padding: 12px 16px !important;
+}
+
+tbody tr {
+  border-bottom: 1px solid var(--bb-border) !important;
+  transition: background 0.1s ease !important;
+  background: #ffffff !important;
+}
+
+tbody tr:hover {
+  background: #f9fafb !important;
+}
+
+tbody td {
+  color: var(--bb-text) !important;
+  font-size: 13px !important;
+  padding: 12px 16px !important;
+}
+
+/* ---- Status badges ---- */
+[class*="status"],
+[class*="Status"],
+[class*="badge"],
+[class*="Badge"],
+[class*="chip"],
+[class*="Chip"] {
+  border-radius: 6px !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  padding: 3px 9px !important;
+  letter-spacing: 0.03em !important;
+  display: inline-flex !important;
+  align-items: center !important;
+}
+
+[class*="completed"], [data-status="completed"] {
+  background: #dcfce7 !important;
+  color: #15803d !important;
+  border: 1px solid #bbf7d0 !important;
+}
+
+[class*="failed"], [data-status="failed"] {
+  background: var(--bb-error-bg) !important;
+  color: var(--bb-error) !important;
+  border: 1px solid var(--bb-error-border) !important;
+}
+
+[class*="waiting"], [class*="delayed"], [data-status="waiting"],  [data-status="delayed"] {
+  background: #f3f4f6 !important;
+  color: #374151 !important;
+  border: 1px solid #e5e7eb !important;
+}
+
+[class*="active"], [data-status="active"] {
+  background: #fefce8 !important;
+  color: #92400e !important;
+  border: 1px solid #fde68a !important;
+}
+
+/* ---- Buttons — same as login (black bg, white text) ---- */
+button,
+[class*="Button"],
+[class*="button"],
+[role="button"] {
+  border-radius: 8px !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+}
+
+button[class*="primary"],
+button[class*="Primary"],
+[class*="submitBtn"],
+[class*="SubmitBtn"] {
+  background: var(--bb-accent) !important;
+  color: #ffffff !important;
+  border: none !important;
+}
+
+button[class*="primary"]:hover,
+button[class*="Primary"]:hover {
+  background: var(--bb-accent-hover) !important;
+}
+
+button[class*="danger"],
+button[class*="Danger"],
+button[class*="delete"],
+button[class*="Delete"],
+button[class*="remove"],
+button[class*="Remove"] {
+  background: #ffffff !important;
+  color: var(--bb-error) !important;
+  border: 1px solid var(--bb-error-border) !important;
+}
+
+button[class*="danger"]:hover,
+button[class*="delete"]:hover {
+  background: var(--bb-error-bg) !important;
+}
+
+/* Secondary / outline buttons */
+button[class*="secondary"],
+button[class*="Secondary"],
+button[class*="outline"],
+button[class*="ghost"] {
+  background: #ffffff !important;
+  color: var(--bb-text) !important;
+  border: 1px solid var(--bb-border) !important;
+}
+
+button[class*="secondary"]:hover,
+button[class*="outline"]:hover {
+  background: #f9fafb !important;
+}
+
+/* ---- Inputs — identical to login page ---- */
+input,
+select,
+textarea {
+  background: #ffffff !important;
+  border: 1px solid #d1d5db !important;   /* border-gray-300 */
+  border-radius: 8px !important;
+  color: var(--bb-text) !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 14px !important;
+  padding: 10px 14px !important;
+  outline: none !important;
+  transition: border-color 0.15s, box-shadow 0.15s !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--bb-text-placeholder) !important;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--bb-accent) !important;
+  box-shadow: 0 0 0 2px var(--bb-focus-ring) !important;
+}
+
+/* ---- Dividers / separators ---- */
+hr,
+[class*="divider"],
+[class*="Divider"],
+[class*="separator"] {
+  border-color: var(--bb-border) !important;
+}
+
+/* ---- Error / alert messages ---- */
+[class*="error"],
+[class*="Error"],
+[class*="alert"],
+[class*="Alert"] {
+  background: var(--bb-error-bg) !important;
+  border: 1px solid var(--bb-error-border) !important;
+  color: #b91c1c !important;
+  border-radius: 8px !important;
+  padding: 10px 14px !important;
+  font-size: 13px !important;
+}
+
+/* ---- Tooltips / popovers ---- */
+[class*="tooltip"],
+[class*="Tooltip"],
+[class*="popover"],
+[class*="Popover"] {
+  background: #111827 !important;
+  color: #f9fafb !important;
+  border-radius: 6px !important;
+  font-size: 12px !important;
+  padding: 5px 10px !important;
+}
+
+/* ---- Scrollbars ---- */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #f3f4f6; }
+::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+
+/* ---- Typography ---- */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--bb-text) !important;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 700 !important;
+}
+
+p, span, label, li {
+  font-family: 'Inter', sans-serif !important;
+}
+
+a {
+  color: var(--bb-text) !important;
+  text-decoration: none !important;
+}
+
+a:hover { text-decoration: underline !important; }
+
+/* ---- Stat / metric numbers ---- */
+[class*="stat"],
+[class*="Stat"],
+[class*="count"],
+[class*="Count"],
+[class*="metric"],
+[class*="number"] {
+  color: var(--bb-text) !important;
+  font-weight: 700 !important;
+  font-size: 24px !important;
+}
+
+/* ---- Pagination ---- */
+[class*="pagination"],
+[class*="Pagination"] {
+  display: flex !important;
+  gap: 4px !important;
+}
+
+[class*="page"],
+[class*="Page"] {
+  background: #ffffff !important;
+  border: 1px solid var(--bb-border) !important;
+  border-radius: 6px !important;
+  color: var(--bb-text) !important;
+  font-size: 13px !important;
+  padding: 5px 10px !important;
+}
+
+[class*="activePage"],
+[class*="currentPage"] {
+  background: var(--bb-accent) !important;
+  color: #ffffff !important;
+  border-color: var(--bb-accent) !important;
+}

@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import path from 'path';
+import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { createBullBoard } from '@bull-board/api';
 import { BullMQAdapter } from '@bull-board/api/bullMQAdapter';
@@ -24,14 +25,22 @@ export function createApp() {
   app.use(cookieParser());
 
   // CORS configuration
+  const allowedOrigins = [
+    'http://localhost:5173',
+    'http://127.0.0.1:5173',
+    'http://localhost:3000',
+    'http://localhost:4000',
+    // Azure App Service domain — set FRONTEND_URL env var to override
+    process.env.FRONTEND_URL,
+  ].filter(Boolean) as string[];
+
   app.use(
     cors({
-      origin: [
-        'http://localhost:5173',
-        'http://127.0.0.1:5173',
-        'http://localhost:3000',
-        'http://localhost:4000',
-      ],
+      origin: (origin, callback) => {
+        // Allow requests with no origin (mobile apps, curl, same-origin)
+        if (!origin || allowedOrigins.includes(origin)) return callback(null, true);
+        callback(null, true); // On Azure same-origin, origin is always allowed
+      },
       credentials: true,
       methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
       allowedHeaders: ['Content-Type', 'Authorization'],
@@ -90,21 +99,32 @@ export function createApp() {
   app.use('/api/slack', slackRoutes);
   app.use('/', authRoutes); // mounts /profile, /login, /signup, /auth/google
 
-  // Root / Health Check
-  app.get('/', (_req, res) => {
-    res.json({
-      service: 'ReachInbox Full-stack Email Job Scheduler',
-      status: 'healthy',
-      bullBoardUrl: 'http://localhost:4000/admin/queues',
-      docs: {
-        scheduled: '/api/emails/scheduled',
-        sent: '/api/emails/sent',
-        search: '/api/emails/search?q=query',
-        slackStatus: '/api/slack/status',
-        stats: '/api/emails/stats',
-      },
+  // ── Serve built React frontend (production / Azure) ──────────────
+  // The frontend is built into ../../dist (relative to backend/dist/)
+  const FRONTEND_DIST = path.join(__dirname, '..', '..', '..', 'dist');
+  if (fs.existsSync(FRONTEND_DIST)) {
+    app.use(express.static(FRONTEND_DIST));
+    // SPA fallback — any non-API route serves index.html
+    app.get('*', (req, res) => {
+      if (!req.path.startsWith('/api') && !req.path.startsWith('/admin')) {
+        res.sendFile(path.join(FRONTEND_DIST, 'index.html'));
+      }
     });
-  });
+    console.log('✅ Serving React frontend from:', FRONTEND_DIST);
+  } else {
+    // Dev mode — no built frontend, just show API info
+    app.get('/', (_req, res) => {
+      res.json({
+        service: 'ReachInbox Full-stack Email Job Scheduler',
+        status: 'healthy',
+        docs: {
+          scheduled: '/api/emails/scheduled',
+          sent: '/api/emails/sent',
+          search: '/api/emails/search?q=query',
+        },
+      });
+    });
+  }
 
   return app;
 }
